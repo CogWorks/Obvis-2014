@@ -107,7 +107,7 @@ class DispersionAlgo():
         self.fix_radius = 35
         self.time_bad_data = 0
         self.bad_data_threshold = 100
-        self.fixation_threshold = 100
+        self.fixation_threshold = 50
         self.outlier_threshold = 17
         self.present_fix = D_Fixation()
         self.potential_fix = D_Fixation()
@@ -198,12 +198,14 @@ class DispersionAlgo():
                 self.reset_potential()
         else:
             step.append('bad')
-            if self.time_bad_data > 0:
+            if self.time_bad_data == 0:
                 self.time_bad_data = ed.data_time
-            if self.time_bad_data > self.bad_data_threshold:
+            if (ed.data_time - self.time_bad_data) > self.bad_data_threshold:
+                self.time_bad_data = 0
                 if self.present_fix.minimum_fixation_p(self.fixation_threshold):
                     step.append('create fix 2')
                     self.finish_fixation()
+                    self.reset_fixations()
                 else:
                     step.append('reset')
                     self.reset_fixations()

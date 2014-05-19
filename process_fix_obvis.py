@@ -377,7 +377,7 @@ class Process_Eye_Data():
             elif ln[4] == 'trial-buttons-end':
                 self.extract_targ_loc_info(ln)
         #pdb.set_trace()
-        print('num fixations ', len(self.disp_fix_accum), round( 100 * (1.0 - (bad_cnt / float(cnt)))))
+        print('data quality', round( 100 * (1.0 - (bad_cnt / float(cnt)))))
 
 
 class TaskDisplay():
