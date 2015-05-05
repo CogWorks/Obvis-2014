@@ -43,6 +43,8 @@ class D_Fixation():
         self.trial_phase = None
         self.distractor_type = 'N/A'
         self.image_id = None
+        self.psim = 'NA'
+        self.ssim = 'NA'
         
     
     def within_current_fixation_p(self,ed,radius):
@@ -96,18 +98,20 @@ class D_Fixation():
             to.y_fix += self.y_fix
             to.x_cog = to.x_fix / to.samples_in
             to.y_cog = to.y_fix / to.samples_in
-            to.end_tm += self.end_tm
-            to.end_mac += self.end_mac
+            #print(to.end_tm,self.end_tm,self.fix_num)
+            to.end_tm = self.end_tm
+            to.end_mac = self.end_mac
             to.duration = to.end_tm - to.start_tm
+            #print(to.end_tm,self.end_tm,to.start_tm,to.duration)
 
 
 
 class DispersionAlgo():
-    def __init__(self):
+    def __init__(self,fix_threshold = 100):
         self.fix_radius = 35
         self.time_bad_data = 0
         self.bad_data_threshold = 100
-        self.fixation_threshold = 50
+        self.fixation_threshold = fix_threshold #50 #100
         self.outlier_threshold = 17
         self.present_fix = D_Fixation()
         self.potential_fix = D_Fixation()
